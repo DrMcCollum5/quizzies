@@ -164,13 +164,7 @@ function checkAnswer() {
         gameOver();
     }
 }
-// function chooseA() { checkAnswer(0); }
 
-// function chooseB() { checkAnswer(1); }
-
-// function chooseC() { checkAnswer(2); }
-
-// function chooseD() { checkAnswer(3); }
 
 // when all questions are answered or timer reaches 0, game over
 function gameOver() {
@@ -214,10 +208,7 @@ function storeHighScores() {
     // ADD EVENT LISTENERS
     
    startQuizBtn.addEventListener("click", newQuiz);
-//    choiceA.addEventListener("click", chooseA);
-//    choiceB.addEventListener("click", chooseB);
-//    choiceC.addEventListener("click", chooseC);
-//    choiceD.addEventListener("click", chooseD);
+
    
    submitInitialBtn.addEventListener("click", function(){ 
        storeHighScores();
