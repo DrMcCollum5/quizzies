@@ -33,27 +33,44 @@
       </div>
     </div>
     <script src="script.js"></script>
+
+<!--quiz div  -->
+<div id="questionDiv" style="display: none;">
+  <p id="questionTitle" class="pl-5 ml-2 pt-5 justify-content-center font-weight-bold"></p>
+  <div class="pl-5 pt-2 pb-3 m-2 justify-content-center">
+      <p><button id="btn0" class="btn btn-dark"></button></p>
+      <p><button id="btn1" class="btn btn-dark"></button></p>
+      <p><button id="btn2" class="btn btn-dark"></button></p>
+      <p><button id="btn3" class="btn btn-dark"></button></p>
+      <hr id="lineBreak" style="display: none" class="mt-4">
+      <p id="answerCheck" style="display: none;"></p>
+  </div>
+</div>
+
+<!-- score div -->
+<div class="pl-5 ml-2 pt-5 justify-content-center font-weight-bold" id="summary" style="display: none;">
+  <div class="col-2"></div>
+  <div class="col-8 text-left">
+      <h2 class="font-weight-bold pt-2 pb-3 m-2">Your final score is <span id="finalScore"></span> !</h2>
+      <form>
+          <p class="pt-2 pb-3 m-2">Enter your initials: <input id="initialInput" class="form-control pt-2 pb-3 mt-2" type="text">
+          <button type="submit" id="submitInitialBtn" class="btn btn-info mt-3">Submit</button>
+          </p>
+      </form>
+  </div>
+<div class="col-2"></div>
+</div>
+
+
+
+</div>
+</main>
+<div class="col-md-2"></div>
+</div>
+</div>
+
+    
   </body>
 </html>
 
-        <!-- creating a modal for when quiz ends
-      <div class="modal-container" id="score-modal">
-
-          <div class="modal-content-container">
-
-              <h1>Congratulations, Quiz Completed.</h1>
-
-              <div class="grade-details">
-                  <p>Attempts : 10</p>
-                  <p>Wrong Answers : <span id="wrong-answers"></span></p>
-                  <p>Right Answers : <span id="right-answers"></span></p>
-                  <p>Grade : <span id="grade-percentage"></span>%</p>
-                  <p ><span id="remarks"></span></p>
-              </div>
-
-              <div class="modal-button-container">
-                  <button onclick="closeScoreModal()">Continue</button>
-              </div>
-
-          </div>
-      </div> -->
+       
