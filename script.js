@@ -1,42 +1,42 @@
 const questions = [
 	{
 		question: "Commonly used data types DO NOT include:",
-		answers: {
-			a: '1. strings',
-			b: '2. booleans',
-			c: '3. alerts',
-            d: '4. numbers'
-		},
+		answers: [
+			'1. strings',
+			'2. booleans',
+			'3. alerts',
+            '4. numbers'
+        ],
 		correctAnswer: '3. alerts'
 	},
 	{
 		question: "The condition in an if/else statement is enclosed within _____.",
-		answers: {
-			a: '1. quotes',
-			b: '2. curly brackets',
-			c: '3. parentheses',
-            d: '4. square brackets'
-		},
+		answers: [
+			'1. quotes',
+			'2. curly brackets',
+			'3. parentheses',
+            '4. square brackets'
+        ],
 		correctAnswer: '3. parentheses'
 	},
     {
 		question: "Arrays in JavaScript can be used to store _____.",
-		answers: {
-			a: '1. numbers and strings',
-			b: '2. other arrays',
-			c: '3. booleans',
-            d: '4. all of the above'
-		},
+		answers: [
+			'1. numbers and strings',
+			'2. other arrays',
+			'3. booleans',
+            '4. all of the above'
+        ],
 		correctAnswer: '4. all of the above'
 	},
     {
 		question: "String values must be enclosed within ______ when being assigned to variables.",
-		answers: {
-			a: '1. commas',
-			b: '2. curly brackets',
-			c: '3. quotes',
-            d: '4. parentheses'
-		},
+		answers: [
+			'1. commas',
+			'2. curly brackets',
+			'3. quotes',
+            '4. parentheses'
+        ],
 		correctAnswer: '3. quotes'
 	},
     		
@@ -44,12 +44,15 @@ const questions = [
 
 
 // Global Variables
-var timer = document.getElementById("timer");
+var timer = document.getElementById("time");
 var timeLeft = document.getElementById("timeLeft");
 var timesUp = document.getElementById("timesUp");
 
-var startDiv = document.getElementById("start");
-var startQuizBtn = document.getElementById("start-quiz-button");
+var startDiv = document.getElementById("welcome");
+var startQuizBtn = document.getElementById("start-button");
+var choices = document.getElementById("choices");
+var questionHeaderTitle = document.getElementById("question-header-title");
+var quiz = document.getElementById("quiz");
 
 var questionDiv = document.getElementById("questionDiv");
 var questionTitle = document.getElementById("questionTitle");
@@ -78,65 +81,77 @@ var correctAnswer = 0;
 var questionNum = 0;
 var scoreResult;
 var questionIndex = 0;
+var startTimer;
+
+
 
 
 // WHEN I click the start button, timer starts
 
 var totalTime = 151;
 function newQuiz() {
-    questionIndex = 0;
-    totalTime = 150;
-    timeLeft.textContent = totalTime;
+
+    timer.textContent = totalTime;
     initialInput.textContent = "";
 
     startDiv.style.display = "none";
-    questionDiv.style.display = "block";
+//    questionDiv.style.display = "block";
+    quiz.style.display = "block";
     timer.style.display = "block";
-    timesUp.style.display = "none";
+   // timesUp.style.display = "none";
 
-    var startTimer = setInterval(function() {
+    startTimer = setInterval(function() {
         totalTime--;
-        timeLeft.textContent = totalTime;
+        timer.textContent = totalTime;
         if(totalTime <= 0) {
-            clearInterval(startTimer);
-            if (questionIndex < questions.length - 1) {
-                gameOver();
-            }
+            totalTime = 0;
+
         }
     },1000);
 
-    showQuiz();
+    nextQuestion();
 };
 
-// Questions choices
-function showQuiz() {
-    nextQuestion();
-}
+
 
 function nextQuestion() {
-    questionTitle.textContent = questions[questionIndex].question;
-    choiceA.textContent = questions[questionIndex].choices[0];
-    choiceB.textContent = questions[questionIndex].choices[1];
-    choiceC.textContent = questions[questionIndex].choices[2];
-    choiceD.textContent = questions[questionIndex].choices[3];
+
+    console.log(questions[questionIndex].question)
+    questionHeaderTitle.textContent = questions[questionIndex].question;
+
+    choices.innerHTML = "";
+
+    questions[questionIndex].answers.forEach(function(answer) {
+        var answerElement = document.createElement("button");
+        answerElement.setAttribute("value", answer);
+        answerElement.textContent = answer
+        answerElement.addEventListener("click", checkAnswer)
+        choices.append(answerElement)
+
+
+    })
+    // choiceA.textContent = questions[questionIndex].choices[0];
+    // choiceB.textContent = questions[questionIndex].choices[1];
+    // choiceC.textContent = questions[questionIndex].choices[2];
+    // choiceD.textContent = questions[questionIndex].choices[3];
 }
 
 // after question is answered, show if correct or wrong
-function checkAnswer(answer) {
+function checkAnswer() {
 
     var lineBreak = document.getElementById("lineBreak");
     lineBreak.style.display = "block";
     answerCheck.style.display = "block";
 
-    if (questions[questionIndex].answer === questions[questionIndex].choices[answer]) {
+    if (this.value === questions[questionIndex].correctAnswer) {
         // correct answer, add 1 score to final score
-        correctAns++;
+        correctAnswer++;
         // console.log(correctAns);
         answerCheck.textContent = "Correct!";
     } else {
         // wrong answer, deduct 10 second from timer
         totalTime -= 10;
-        timeLeft.textContent = totalTime;
+        timer.textContent = totalTime;
         answerCheck.textContent = "Wrong! The correct answer is: " + questions[questionIndex].answer;
     }
 
@@ -149,13 +164,13 @@ function checkAnswer(answer) {
         gameOver();
     }
 }
-function chooseA() { checkAnswer(0); }
+// function chooseA() { checkAnswer(0); }
 
-function chooseB() { checkAnswer(1); }
+// function chooseB() { checkAnswer(1); }
 
-function chooseC() { checkAnswer(2); }
+// function chooseC() { checkAnswer(2); }
 
-function chooseD() { checkAnswer(3); }
+// function chooseD() { checkAnswer(3); }
 
 // when all questions are answered or timer reaches 0, game over
 function gameOver() {
@@ -163,52 +178,62 @@ function gameOver() {
     questionDiv.style.display = "none";
     startDiv.style.display = "none";
     timer.style.display = "none";
-    timesUp.style.display = "block";
+    clearInterval(startTimer);
+   // timesUp.style.display = "block";
 
     // show final score
-    finalScore.textContent = correctAns;
+    finalScore.textContent = correctAnswer;
 }
 
 // enter initial and store highscore in local storage
-function storeHighScores(event) {
-    event.preventDefault();
+function storeHighScores() {
+   // event.preventDefault();
 
     // stop function is initial is blank
+  
     if (initialInput.value === "") {
         alert("Please enter your initials!");
         return;
     } 
 
+    var allScores = JSON.parse(localStorage.getItem("allScores")) || [];
+    var newScore = {
+        score: correctAnswers,
+        initials: initials
+    }
+
+    allScores.push(newScore);
+
     startDiv.style.display = "none";
     timer.style.display = "none";
-    timesUp.style.display = "none";
+  //  timesUp.style.display = "none";
     summary.style.display = "none";
     highScoreSection.style.display = "block";   
-
+}
     
     // ADD EVENT LISTENERS
     
    startQuizBtn.addEventListener("click", newQuiz);
-   choiceA.addEventListener("click", chooseA);
-   choiceB.addEventListener("click", chooseB);
-   choiceC.addEventListener("click", chooseC);
-   choiceD.addEventListener("click", chooseD);
+//    choiceA.addEventListener("click", chooseA);
+//    choiceB.addEventListener("click", chooseB);
+//    choiceC.addEventListener("click", chooseC);
+//    choiceD.addEventListener("click", chooseD);
    
-   submitInitialBtn.addEventListener("click", function(event){ 
-       storeHighScores(event);
+   submitInitialBtn.addEventListener("click", function(){ 
+       storeHighScores();
    });
    
-   viewHighScore.addEventListener("click", function(event) { 
-       showHighScores(event);
-   });
+//    viewHighScore.addEventListener("click", function() { 
+//        showHighScores();
+//    });
    
-   goBackBtn.addEventListener("click", function() {
-       startDiv.style.display = "block";
-       highScoreSection.style.display = "none";
-   });
+//    goBackBtn.addEventListener("click", function() {
+//        startDiv.style.display = "block";
+//        highScoreSection.style.display = "none";
+//    });
    
-   clearHighScoreBtn.addEventListener("click", function(){
-       window.localStorage.removeItem("high scores");
-       listOfHighScores.innerHTML = "High Scores Cleared!";
-       listOfHighScores.setAttribute("style", "font-family: 'Archivo', sans-serif; font-style: italic;")
-   });
+//    clearHighScoreBtn.addEventListener("click", function(){
+//        window.localStorage.removeItem("high scores");
+//        listOfHighScores.innerHTML = "High Scores Cleared!";
+//        listOfHighScores.setAttribute("style", "font-family: 'Archivo', sans-serif; font-style: italic;")
+//    });
