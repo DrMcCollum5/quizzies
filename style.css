@@ -5,17 +5,53 @@
 #quiz {
 
 }
-
 body {
-  background-color: lightblue;
+  background-color: #f9fdfd; 
 }
 
-h1 {
-  color: rgb(15, 15, 15);
-  text-align: center;
+h1, 
+h2 {
+  color: #313740;
+  font-family: 'Montserrat', sans-serif;
+}
+
+a {
+  color: #b41127;
+  font-family: 'Archivo', sans-serif;
+}
+
+a:hover {
+  color: #536063;
+  font-family: 'Archivo', sans-serif;
+}
+
+.btn:focus, .btn:active, .btn:visited {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #aec5b1;
+}
+
+#finalScore {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+
+span {
+  font-family: 'Archivo', sans-serif;
 }
 
 p {
-  font-family: verdana;
-  font-size: 20px;
+  font-family: 'Archivo', sans-serif;
 }
+
+#questionTitle {
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#answerCheck {
+  font-style: italic;
+  color: #9ba3b4;
+}
+
+

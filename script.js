@@ -40,6 +40,7 @@ var questionHeaderTitle =document.getElementById("question-header-title");
 var choices= document.getElementById("choices");
 
 var finalScore = document.getElementById("final-score");
+var highScoreSection = document.getElementById("highScoreSection");
 
 var initials = document.getElementById("itinals");
 
@@ -48,9 +49,39 @@ var time = 20;
 var timerId;
 var qIndex = 0;
 
+var goBackBtn = document.getElementById("goBackBtn");
+var clearHighScoreBtn = document.getElementById("clearHighScoreBtn"); 
+var viewHighScore = document.getElementById("viewHighScore");
+var listOfHighScores = document.getElementById("listOfHighScores");
+
 // Click listener for the start button (click listeners are generally at the bottom of the page)
 //initiate quiz
 startBtn.onclick = startQuiz;
+
+startQuizBtn.addEventListener("click", newQuiz);
+choiceA.addEventListener("click", chooseA);
+choiceB.addEventListener("click", chooseB);
+choiceC.addEventListener("click", chooseC);
+choiceD.addEventListener("click", chooseD);
+
+submitInitialBtn.addEventListener("click", function(event){ 
+    storeHighScores(event);
+});
+
+viewHighScore.addEventListener("click", function(event) { 
+    showHighScores(event);
+});
+
+goBackBtn.addEventListener("click", function() {
+    startDiv.style.display = "block";
+    highScoreSection.style.display = "none";
+});
+
+clearHighScoreBtn.addEventListener("click", function(){
+    window.localStorage.removeItem("high scores");
+    listOfHighScores.innerHTML = "High Scores Cleared!";
+    listOfHighScores.setAttribute("style", "font-family: 'Archivo', sans-serif; font-style: italic;")
+});
 
 // Start Quiz function
 function startQuiz() {
@@ -72,6 +103,12 @@ function startQuiz() {
   populateQuiz();
 }
 
+
+
+
+
+
+
 function populateQuiz() {
     //set avtive question
     var activeQuestion=questions[qIndex];
@@ -84,13 +121,28 @@ activeQuestion.a.forEach(function (choice) {
     aButton.onclick=chosenAnswer; 
     choices.append(aButton)
 
-}
-)
+})
 
-}
 
-function chosenAnswer() {
 
 }
 
 function quizComplete() {}
+
+// store scores into local storage
+    var savedHighScores = localStorage.getItem("high scores");
+    var scoresArray;
+
+    if (savedHighScores === null) {
+        scoresArray = [];
+    } else {
+        scoresArray = JSON.parse(savedHighScores)
+    }
+
+    var userScore = {
+        initials: initialInput.value,
+        score: finalScore.textContent
+    };
+
+    console.log(userScore);
+    scoresArray.push(userScore);
